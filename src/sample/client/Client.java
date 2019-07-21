@@ -5,10 +5,8 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import sample.UI.ChatWindow;
 import sample.UI.RegistrationWindow;
 
@@ -60,8 +58,8 @@ public class Client extends Application {
         chatGroup.getChildren().addAll(
                 chatWindow.getInputField(),
                 chatWindow.getMessagesField(),
-                chatWindow.getPushMessage()
-                //chatWindow.getUsersField()
+                chatWindow.getPushMessage(),
+                chatWindow.getUserListField()
         );
 
         chatScene = new Scene(chatGroup,500,450,Color.BISQUE);
@@ -109,7 +107,12 @@ public class Client extends Application {
 
             clientThread = new Thread(() -> {
                 while(in.hasNextLine()){
-                    chatWindow.getMessagesField().appendText(in.nextLine() + "\n");
+                    String msg = in.nextLine();
+                    if(msg.startsWith("message")) {
+                        String[] arrMsg = msg.trim().split(" ");
+                        chatWindow.getUserListField().appendText(arrMsg[2]);
+                    }
+                    chatWindow.getMessagesField().appendText(msg + "\n");
                 }
             });
 

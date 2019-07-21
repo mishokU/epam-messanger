@@ -37,7 +37,15 @@ public class Server {
         }
     }
 
+    public void updateClientsList() {
+        clients.forEach(c -> {
+            if(c.online()) {
+                c.send("clientList",c.getUserName(),"");
+            }
+        });
+    }
+
     public void sendToAllClients(String clientName, String msg){
-        clients.forEach(c -> c.send(clientName, msg));
+        clients.forEach(c -> c.send("message",clientName, msg));
     }
 }

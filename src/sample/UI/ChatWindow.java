@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import org.w3c.dom.Text;
@@ -29,17 +30,17 @@ public class ChatWindow {
     public void initChatWindow(){
         initMessages();
         initInputField();
-        //initUsersField();
+        initUsersField();
         initPushBtn(out);
     }
 
-    /*private void initUsersField() {
+    private void initUsersField() {
         users = new TextArea();
         users.setMaxWidth(90);
         users.setMinHeight(560);
         users.setTranslateX(500);
         users.setTranslateY(30);
-    }*/
+    }
 
     private void initMessages(){
         messages = new TextArea();
@@ -79,7 +80,5 @@ public class ChatWindow {
         return messages;
     }
 
-    public TextArea getUsersField(){
-        return users;
-    }
+    public TextArea getUserListField(){ return users; }
 }

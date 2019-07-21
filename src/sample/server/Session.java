@@ -12,6 +12,7 @@ public class Session {
     private Scanner in;
     private PrintWriter out;
     private Server server;
+    private Socket client;
     private String nickName;
     private Date time;
     private String dtime;
@@ -19,6 +20,7 @@ public class Session {
 
     public Session(Socket client, Server server) throws IOException {
         this.server = server;
+        this.client = client;
         in = new Scanner(client.getInputStream());
         out = new PrintWriter(client.getOutputStream(),true);
     }
@@ -30,12 +32,14 @@ public class Session {
         server.sendToAllClients(nickName,  " has disconnected");
     }
 
-    public void send(String clientName, String msg) {
+    public void send(String key, String clientName, String msg) {
+
         time = new Date(); // текущая дата
         dt1 = new SimpleDateFormat("HH:mm:ss"); // берем только время до секунд
         dtime = dt1.format(time); // время
 
-        out.println("(" + dtime + ") " + clientName + " >> " + msg);
+        out.println(key + " (" + dtime + ") " + clientName + " >> " + msg);
+
     }
 
     public String getUserName() {
@@ -44,5 +48,9 @@ public class Session {
         } else {
             return "error";
         }
+    }
+
+    public boolean online() {
+        return !client.isClosed();
     }
 }
